@@ -5,7 +5,7 @@ import * as apollo from "@apollo/client"
 import App from "./App"
 
 const client = new apollo.ApolloClient({
-  uri: "http://localhost:4000/graphql/",
+  uri: "https://8n9krbc23f.execute-api.us-east-1.amazonaws.com/dev/",
   cache: new apollo.InMemoryCache(),
 })
 
