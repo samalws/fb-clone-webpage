@@ -48,13 +48,13 @@ function App() {
   if (data === null) return <p>Null response :(</p>
 
   const callbacks = {
-    like: ((id, like) => likeMut({ variables: { tok, id, like }})), // TODO update the displayed value
+    like: ((id: string, like: boolean) => { likeMut({ variables: { tok, id, like }}) }), // TODO update the displayed value
     replyBoxType: (() => alert("typed")),
     postReply: (() => alert("replied")),
   }
   return (
     <div className="App">
-      <Comment info={data.lookupPostId} callbacks={callbacks} replyBoxValue="abcd" />
+      <Comment info={data.lookupPostId} callbacks={callbacks} replyBoxValue="abcd" inReply={false} />
     </div>
   )
 }
