@@ -1,10 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import React from "react"
+import ReactDOM from "react-dom/client"
+import * as apollo from "@apollo/client"
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import App from "./App"
+
+const client = new apollo.ApolloClient({
+  uri: "http://localhost:4000/graphql/",
+  cache: new apollo.InMemoryCache(),
+})
+
+const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
-    <App />
+    <apollo.ApolloProvider client={client}>
+      <App />
+    </apollo.ApolloProvider>
   </React.StrictMode>
-);
+)
