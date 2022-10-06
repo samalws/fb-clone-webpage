@@ -45,7 +45,7 @@ function App() {
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
-  if (data === null) return <p>Null response :(</p>
+  if (data == null || data.lookupPostId == null) return <p>Null response :(</p>
 
   const callbacks = {
     like: ((id, like) => likeMut({ variables: { tok, id, like }})), // TODO update the displayed value
