@@ -5,7 +5,7 @@ function CommentPoster(props) {
 }
 
 function CommentBody(props) {
-  return ( <p>{props.info.text}</p> )
+  return ( <p>{props.info.message}</p> )
 }
 
 function ReplyBox(props) {
@@ -26,8 +26,8 @@ function Comment(props) {
   const commentInfo = props.info
   return (<div className="Comment">
     <CommentPoster info={commentInfo.poster} />
-    <CommentBody info={commentInfo.body} />
-    <LikeButton info={commentInfo.like} callback={props.callbacks.like} />
+    <CommentBody info={commentInfo} />
+    <LikeButton info={commentInfo} callback={props.callbacks.like} />
     { props.inReply || <Replies info={commentInfo.replies} replyBoxValue={props.replyBoxValue} callbacks={props.callbacks} /> }
   </div>)
 }
