@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 import { text, comment, reply } from "./Style"
 import LikeButton from "./LikeButton"
 
@@ -10,8 +12,15 @@ function CommentBody(props) {
 }
 
 function ReplyBox(props) {
-  return (<form onSubmit={props.callbacks.postReply}>
-    <input value={props.value} onChange={props.callbacks.replyBoxType} type="text" />
+  const [ text, changeText ] = useState("")
+
+  function submit() {
+    props.callback(props.replyTo, text)
+    changeText("")
+  }
+
+  return (<form action="#" onSubmit={submit}>
+    <input type="text" value={text} onChange={ (event) => changeText(event.target.value) } />
     <input type="submit" value="Submit" />
   </form>)
 }
@@ -19,7 +28,7 @@ function ReplyBox(props) {
 function Replies(props) {
   return (<div className="Replies">
     { props.info.map((e) => <Comment key={e.id} info={e} extraState={props.extraState} inReply={true} />) }
-    <ReplyBox value={props.replyBoxValue} callbacks={props.extraState.callbacks} />
+    <ReplyBox replyTo={props.replyTo} callback={props.extraState.callbacks.postReply} />
   </div>)
 }
 
@@ -30,7 +39,7 @@ function Comment(props) {
     <CommentPoster info={commentInfo.poster} />
     <CommentBody info={commentInfo} />
     <LikeButton info={commentInfo} likeOverrides={extraState.likeOverrides} callback={extraState.callbacks.like} />
-    { props.inReply || <Replies info={commentInfo.replies} extraState={extraState} /> }
+    { props.inReply || <Replies replyTo={commentInfo.id} info={commentInfo.replies} extraState={extraState} /> }
   </div>)
 }
 

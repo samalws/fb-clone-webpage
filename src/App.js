@@ -36,11 +36,18 @@ mutation LikePost($tok: String!, $id: String!, $like: Boolean!) {
 }
 `
 
+const replyMutation = apollo.gql`
+mutation Reply($tok: String!, $replyTo: String!, $message: String!) {
+  makeReply(tok: $tok, replyTo: $replyTo, message: $message) { id }
+}
+`
+
 function App() {
   const tok = "633c968404a49a767f70bf80"
 
-  const { loading, error, data } = apollo.useQuery(getPostQuery, { variables: { tok, id: "633df3e520c69a6ed03f1197" }})
+  const { loading, error, data, refetch } = apollo.useQuery(getPostQuery, { variables: { tok, id: "633df3e520c69a6ed03f1197" }})
   const [ likeMut ] = apollo.useMutation(likePostMutation)
+  const [ replyMut ] = apollo.useMutation(replyMutation)
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
@@ -48,12 +55,14 @@ function App() {
 
   const callbacks = {
     like: ((id, like) => likeMut({ variables: { tok, id, like }})),
-    replyBoxType: (() => alert("typed")),
-    postReply: (() => alert("replied")),
+    async postReply(replyTo, message) {
+      await replyMut({ variables: { tok, replyTo, message }})
+      refetch()
+    }
   }
   return (
     <div className="App">
-      <Comment info={data.lookupPostId} extraState={{callbacks, replyBoxValue: "abcd"}} />
+      <Comment info={data.lookupPostId} extraState={{callbacks}} />
     </div>
   )
 }
