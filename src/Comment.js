@@ -1,11 +1,12 @@
+import { text, comment, reply } from "./Style"
 import LikeButton from "./LikeButton"
 
 function CommentPoster(props) {
-  return ( <p>{props.info.name}</p> )
+  return ( <p style={text}>{props.info.name}</p> )
 }
 
 function CommentBody(props) {
-  return ( <p>{props.info.message}</p> )
+  return ( <p style={text}>{props.info.message}</p> )
 }
 
 function ReplyBox(props) {
@@ -24,7 +25,7 @@ function Replies(props) {
 
 function Comment(props) {
   const commentInfo = props.info
-  return (<div className="Comment">
+  return (<div style={props.inReply ? reply : comment}>
     <CommentPoster info={commentInfo.poster} />
     <CommentBody info={commentInfo} />
     <LikeButton info={commentInfo} callback={props.callbacks.like} />

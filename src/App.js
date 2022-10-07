@@ -1,6 +1,5 @@
 import * as apollo from "@apollo/client"
 
-import "./App.css"
 import Comment from "./Comment"
 
 // tok: "633c968404a49a767f70bf80"
