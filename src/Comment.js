@@ -18,18 +18,19 @@ function ReplyBox(props) {
 
 function Replies(props) {
   return (<div className="Replies">
-    { props.info.map((e) => <Comment key={e.id} info={e} callbacks={props.callbacks} inReply={true} />) }
-    <ReplyBox value={props.replyBoxValue} callbacks={props.callbacks} />
+    { props.info.map((e) => <Comment key={e.id} info={e} extraState={props.extraState} inReply={true} />) }
+    <ReplyBox value={props.replyBoxValue} callbacks={props.extraState.callbacks} />
   </div>)
 }
 
 function Comment(props) {
   const commentInfo = props.info
+  const extraState = props.extraState
   return (<div style={props.inReply ? reply : comment}>
     <CommentPoster info={commentInfo.poster} />
     <CommentBody info={commentInfo} />
-    <LikeButton info={commentInfo} callback={props.callbacks.like} />
-    { props.inReply || <Replies info={commentInfo.replies} replyBoxValue={props.replyBoxValue} callbacks={props.callbacks} /> }
+    <LikeButton info={commentInfo} likeOverrides={extraState.likeOverrides} callback={extraState.callbacks.like} />
+    { props.inReply || <Replies info={commentInfo.replies} extraState={extraState} /> }
   </div>)
 }
 

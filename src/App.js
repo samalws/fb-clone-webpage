@@ -1,3 +1,4 @@
+import { useState } from "react"
 import * as apollo from "@apollo/client"
 
 import Comment from "./Comment"
@@ -41,19 +42,24 @@ function App() {
 
   const { loading, error, data } = apollo.useQuery(getPostQuery, { variables: { tok, id: "633df3e520c69a6ed03f1197" }})
   const [ likeMut ] = apollo.useMutation(likePostMutation)
+  const [ likeOverrides, overrideLikes ] = useState({})
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
   if (data == null || data.lookupPostId == null) return <p>Null response :(</p>
 
   const callbacks = {
-    like: ((id, like) => likeMut({ variables: { tok, id, like }})), // TODO update the displayed value
+    like(id, like) {
+      const wasSet = likeOverrides[id] !== undefined && likeOverrides[id] !== null
+      overrideLikes({ [id]: wasSet ? null : like })
+      likeMut({ variables: { tok, id, like }})
+    },
     replyBoxType: (() => alert("typed")),
     postReply: (() => alert("replied")),
   }
   return (
     <div className="App">
-      <Comment info={data.lookupPostId} callbacks={callbacks} replyBoxValue="abcd" />
+      <Comment info={data.lookupPostId} extraState={{likeOverrides, callbacks, replyBoxValue: "abcd"}} />
     </div>
   )
 }
