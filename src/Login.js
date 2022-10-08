@@ -48,8 +48,8 @@ function Login(props) {
   // TODO in onChange, why do we need to set both username and password? shouldnt that be assumed that we ignore the other one?
   // TODO when the webpage doesnt have a # in front of it, it reloads
   return (<form action="#" onSubmit={login}>
-    <input type="text" value={text.username} onChange={ (event) => changeText({ username: event.target.value, password: text.password }) } />
-    <input type="password" value={text.password} onChange={ (event) => changeText({ username: text.username, password: event.target.value }) } />
+    <input type="text" placeholder="username" value={text.username} onChange={ (event) => changeText({ username: event.target.value, password: text.password }) } />
+    <input type="password" placeholder="password" value={text.password} onChange={ (event) => changeText({ username: text.username, password: event.target.value }) } />
     <input type="submit" value="Log in" />
   </form>)
 }
