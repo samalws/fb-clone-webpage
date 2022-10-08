@@ -6,7 +6,7 @@ import { lightGray } from "./Style"
 import App from "./App"
 
 const client = new apollo.ApolloClient({
-  uri: "https://8n9krbc23f.execute-api.us-east-1.amazonaws.com/dev/",
+  uri: "https://v8rr6wgff2.execute-api.us-east-1.amazonaws.com/dev/",
   cache: new apollo.InMemoryCache(),
 })
 
