@@ -1,6 +1,7 @@
 import { useCookies } from "react-cookie"
 
 import Login from "./Login"
+import Logout from "./Logout"
 import Comment from "./Comment"
 
 function App() {
@@ -10,7 +11,8 @@ function App() {
 
   return (
     <div>
-      <Login callback={() => alert("logged in!")} />
+      <Login callback={() => alert("logged in")} />
+      <Logout callback={() => alert("logged out")} />
       <Comment tok={cookies.tok} id={id} />
     </div>
   )
