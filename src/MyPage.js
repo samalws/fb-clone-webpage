@@ -10,10 +10,11 @@ query GetPosts($tok: String!) {
 `
 
 function MyPage(props) {
-  const tok = props.tok
+  const tok = props.tok ?? ""
 
   const { loading, error, data, refetch } = useQuery(getPostsQuery, { variables: { tok }})
 
+  if (tok === "" || tok === "undefined") return <p>Please sign in to view your page</p>
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
   if (data == null || data.myUser == null) return <p>Null response :(</p>
