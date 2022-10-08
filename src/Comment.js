@@ -11,6 +11,7 @@ query GetPost($tok: String!, $id: String!) {
     poster {
       id
       name
+      pfpLink
     }
     message
     liked
@@ -20,6 +21,7 @@ query GetPost($tok: String!, $id: String!) {
       poster {
         id
         name
+        pfpLink
       }
       message
       liked
@@ -36,7 +38,10 @@ mutation Reply($tok: String!, $replyTo: String!, $message: String!) {
 `
 
 function CommentPoster(props) {
-  return ( <p style={text}>{props.info.name}</p> )
+  return (<div>
+    <img src={props.info.pfpLink} alt="" />
+    <p style={text}>{props.info.name}</p>
+  </div>)
 }
 
 function CommentBody(props) {
