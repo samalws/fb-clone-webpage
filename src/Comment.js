@@ -47,8 +47,8 @@ function ReplyBox(props) {
   const [ text, changeText ] = useState("")
 
   function submit() {
-    props.replyCallback(text)
     changeText("")
+    props.replyCallback(text)
   }
 
   return (<form action="#" onSubmit={submit}>
