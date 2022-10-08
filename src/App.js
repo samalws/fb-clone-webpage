@@ -1,11 +1,18 @@
+import { useCookies } from "react-cookie"
+
+import Login from "./Login"
 import Comment from "./Comment"
 
 function App() {
-  const tok = "633c968404a49a767f70bf80"
+  const [ cookies ] = useCookies(["tok"])
+
   const id = "633df3e520c69a6ed03f1197" 
 
   return (
-    <Comment tok={tok} id={id} />
+    <div>
+      <Login callback={() => alert("logged in!")} />
+      <Comment tok={cookies.tok} id={id} />
+    </div>
   )
 }
 
