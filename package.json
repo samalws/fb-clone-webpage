@@ -2,6 +2,7 @@
   "name": "fb-clone-webpage",
   "dependencies": {
     "@apollo/client": "^3.7.0",
+    "axios": "^1.1.2",
     "buffer": "^6.0.3",
     "graphql": "^16.6.0",
     "keccak256": "^1.0.6",
