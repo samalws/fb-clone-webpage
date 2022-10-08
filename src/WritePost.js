@@ -18,7 +18,7 @@ function WritePost(props) {
 
   return (<form action="#" onSubmit={submit}>
     <input type="text" value={text} onChange={ (event) => changeText(event.target.value) } />
-    <input type="submit" value="Submit" />
+    <input type="submit" value="Post" />
   </form>)
 }
 
