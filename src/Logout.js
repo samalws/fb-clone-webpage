@@ -12,7 +12,7 @@ function Logout(props) {
   const [ cookies, deleteCookie ] = useCookies(["tok"])
 
   function logout() {
-    logoutMut({ variables: { tok: cookies.tok  }})
+    logoutMut({ variables: { tok: cookies.tok ?? "" }})
     deleteCookie("tok")
     props.callback()
   }

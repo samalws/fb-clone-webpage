@@ -8,6 +8,7 @@ import MyPage from "./MyPage"
 
 function App() {
   const [ cookies ] = useCookies(["tok"])
+  const tok = cookies.tok ?? ""
 
   return (
     <div>
@@ -18,7 +19,7 @@ function App() {
       <p style={text}>Log out:</p>
       <Logout callback={() => alert("logged out")} />
       <p style={text}>My page:</p>
-      <MyPage tok={cookies.tok} />
+      <MyPage tok={tok} />
     </div>
   )
 }

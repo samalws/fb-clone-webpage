@@ -10,7 +10,7 @@ query GetPosts($tok: String!) {
 `
 
 function MyPage(props) {
-  const tok = props.tok ?? ""
+  const tok = props.tok
 
   const { loading, error, data, refetch } = useQuery(getPostsQuery, { variables: { tok }})
 
