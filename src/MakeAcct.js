@@ -20,7 +20,7 @@ function Login(props) {
   const [ usernameText, changeUsernameText ] = useState("")
   const [ nameText, changeNameText ] = useState("")
   const [ passwordText, changePasswordText ] = useState("")
-  const [ image, setImgData ] = useState(null)
+  const [ image, setImage ] = useState(null)
   const [ makeAcctMut ] = useMutation(makeAcctMutation)
 
   async function makeAcct() {
@@ -56,7 +56,7 @@ function Login(props) {
   }
 
   return (<form action="#" onSubmit={makeAcct}>
-    <ImgUpload callback={setImgData} />
+    <ImgUpload callback={setImage} />
     <input type="text" placeholder="username" value={usernameText} onChange={ (event) => changeUsernameText(event.target.value) } />
     <input type="text" placeholder="name" value={nameText} onChange={ (event) => changeNameText(event.target.value) } />
     <input type="password" placeholder="password" value={passwordText} onChange={ (event) => changePasswordText(event.target.value) } />

@@ -14,6 +14,7 @@ query GetPost($tok: String!, $id: String!) {
       pfpLink
     }
     message
+    imageLinks
     liked
     likes
     replies {
@@ -45,7 +46,10 @@ function CommentPoster(props) {
 }
 
 function CommentBody(props) {
-  return ( <p style={text}>{props.info.message}</p> )
+  return (<div>
+    { (props.info.imageLinks ?? []).map((link) => <img key={link} src={link} alt="TODO alt" />) }
+    <p style={text}>{props.info.message}</p>
+  </div>)
 }
 
 function ReplyBox(props) {
