@@ -4,6 +4,7 @@ import { text } from "./Style"
 import MakeAcct from "./MakeAcct"
 import Login from "./Login"
 import Logout from "./Logout"
+import UserSearch from "./UserSearch"
 import MyPage from "./MyPage"
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
       <Login callback={() => alert("logged in")} />
       <p style={text}>Log out:</p>
       <Logout callback={() => alert("logged out")} />
+      <p style={text}>Lookup user:</p>
+      <UserSearch tok={tok} />
       <p style={text}>My page:</p>
       <MyPage tok={tok} />
     </div>
