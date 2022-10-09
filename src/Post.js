@@ -17,6 +17,8 @@ query GetPost($tok: String!, $id: String!) {
     imageLinks
     liked
     likes
+    reposted
+    canRepost
     replies {
       id
       poster {
@@ -29,6 +31,12 @@ query GetPost($tok: String!, $id: String!) {
       likes
     }
   }
+}
+`
+
+const repostMutation = gql`
+mutation Repost($tok: String!, $postId: String!) {
+  repost(tok: $tok, postId: $postId)
 }
 `
 
@@ -52,12 +60,19 @@ function CommentBody(props) {
   </div>)
 }
 
+function RepostButton(props) {
+  // TODO instant refresh
+  if (props.info.reposted) return <p>You reposted</p>
+  if (!props.info.canRepost) return null
+  return <button onClick={props.callback}>Repost</button>
+}
+
 function ReplyBox(props) {
   const [ text, changeText ] = useState("")
 
   function submit() {
     changeText("")
-    props.replyCallback(text)
+    props.callback(text)
   }
 
   return (<form action="#" onSubmit={submit}>
@@ -79,7 +94,7 @@ function Reply(props) {
 function Replies(props) {
   return (<div className="Replies">
     { props.info.map((e) => <Reply key={e.id} info={e} tok={props.tok} />) }
-    <ReplyBox replyCallback={props.replyCallback} />
+    <ReplyBox callback={props.replyCallback} />
   </div>)
 }
 
@@ -88,6 +103,7 @@ function Post(props) {
   const id = props.id
 
   const { loading, error, data, refetch } = useQuery(getPostQuery, { variables: { tok, id }})
+  const [ repostMut ] = useMutation(repostMutation)
   const [ replyMut ] = useMutation(replyMutation)
 
   if (loading) return <p>Loading...</p>
@@ -95,15 +111,22 @@ function Post(props) {
   if (data == null || data.lookupPostId == null) return <p>Null response :(</p>
   const info = data.lookupPostId
 
+  async function repostCallback(message) {
+    await repostMut({ variables: { tok, postId: id }})
+    refetch()
+  }
+
   async function replyCallback(message) {
     await replyMut({ variables: { tok, replyTo: id, message }})
     refetch()
   }
 
   return (<div style={comment}>
+    { (props.repostedBy !== undefined) ? <p>Reposted by {props.repostedBy}</p> : null }
     <CommentPoster info={info.poster} />
     <CommentBody info={info} />
     <LikeButton tok={tok} info={info} />
+    <RepostButton tok={tok} info={info} callback={repostCallback} />
     <Replies tok={tok} info={info.replies} replyCallback={replyCallback} />
   </div>)
 }
