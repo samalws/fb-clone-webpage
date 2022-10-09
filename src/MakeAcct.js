@@ -23,7 +23,9 @@ function Login(props) {
   const [ image, setImage ] = useState(null)
   const [ makeAcctMut ] = useMutation(makeAcctMutation)
 
-  async function makeAcct() {
+  async function makeAcct(event) {
+    event.preventDefault()
+
     if (image == null) {
       alert("please upload a profile picture") // TODO
       return

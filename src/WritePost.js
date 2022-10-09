@@ -15,7 +15,9 @@ function WritePost(props) {
   const [ imgData, setImgData ] = useState(null)
   const [ makePostMut ] = useMutation(makePostMutation)
 
-  async function submit() {
+  async function submit(event) {
+    event.preventDefault()
+
     var imgList = []
     if (imgData !== null) imgList = [imgData]
 

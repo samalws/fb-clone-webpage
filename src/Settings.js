@@ -46,7 +46,9 @@ function Settings(props) {
     alert("Changed setting successfully") // TODO
   }
 
-  async function changeName() {
+  async function changeName(event) {
+    event.preventDefault()
+
     const resp = await changeSettingsMut({ variables: { tok, name }})
     setName("")
     if (resp.data.changeAcctSettings === false) {
@@ -56,7 +58,9 @@ function Settings(props) {
     alert("Changed setting successfully") // TODO
   }
 
-  async function changePassword() {
+  async function changePassword(event) {
+    event.preventDefault()
+
     const resp = await changeSettingsMut({ variables: { tok, pwHashPreSalt: keccak256(pw).toString("base64") }})
     setPw("")
     if (resp.data.changeAcctSettings === false) {
@@ -71,14 +75,14 @@ function Settings(props) {
     <ImgUpload callback={setImage} />
     <button onClick={changePfp}>Change profile picture</button>
     <p>Change name:</p>
-    <form>
+    <form action="#" onSubmit={changeName}>
       <input type="text" placeholder="New name" value={name} onChange={(event) => setName(event.target.value)} />
-      <button onClick={changeName}>Change name</button>
+      <input type="submit" value="Change name" />
     </form>
     <p>Change password:</p>
-    <form>
+    <form action="#" onSubmit={changePassword}>
       <input type="password" placeholder="New password" value={pw} onChange={(event) => setPw(event.target.value)} />
-      <button onClick={changePassword}>Change password</button>
+      <input type="submit" value="Change password" />
     </form>
   </div>)
 }

@@ -70,7 +70,8 @@ function RepostButton(props) {
 function ReplyBox(props) {
   const [ text, changeText ] = useState("")
 
-  function submit() {
+  function submit(event) {
+    event.preventDefault()
     changeText("")
     props.callback(text)
   }

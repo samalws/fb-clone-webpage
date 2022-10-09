@@ -7,9 +7,9 @@ function UserSearch(props) {
   const [ username, setUsername ] = useState("")
 
   return (<div>
-    <form>
+    <form action="#" onSubmit={(event) => { event.preventDefault(); setUsername(text) }}>
       <input type="text" placeholder="Username" value={text} onChange={(event) => setText(event.target.value)} />
-      <button onClick={() => setUsername(text)}>Search</button>
+      <input type="submit" value="Search" />
     </form>
     <UserPage tok={props.tok} username={username} />
   </div>)

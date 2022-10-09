@@ -26,7 +26,9 @@ function Login(props) {
   const [ loginMut ] = useMutation(loginMutation)
   const setCookie = useCookies(["tok"])[1]
 
-  async function login() {
+  async function login(event) {
+    event.preventDefault()
+
     const { username, password } = text
     changeText({ username: "", password: "" })
     const idResp = await client.query({ query: lookupQuery, variables: { username }})
