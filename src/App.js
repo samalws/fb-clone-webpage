@@ -6,6 +6,7 @@ import Login from "./Login"
 import Logout from "./Logout"
 import UserSearch from "./UserSearch"
 import MyPage from "./MyPage"
+import Settings from "./Settings"
 
 function App() {
   const [ cookies ] = useCookies(["tok"])
@@ -23,6 +24,8 @@ function App() {
       <UserSearch tok={tok} />
       <p style={text}>My page:</p>
       <MyPage tok={tok} />
+      <p style={text}>Settings:</p>
+      <Settings tok={tok} />
     </div>
   )
 }
