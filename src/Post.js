@@ -83,7 +83,7 @@ function Replies(props) {
   </div>)
 }
 
-function Comment(props) {
+function Post(props) {
   const tok = props.tok
   const id = props.id
 
@@ -108,4 +108,4 @@ function Comment(props) {
   </div>)
 }
 
-export default Comment
+export default Post

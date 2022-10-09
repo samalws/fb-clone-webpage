@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client"
 
 import WritePost from "./WritePost"
-import Comment from "./Comment"
+import Post from "./Post"
 
 const getPostsQuery = gql`
 query GetPosts($tok: String!) {
@@ -27,7 +27,7 @@ function MyPage(props) {
 
   return (<div>
     <WritePost tok={props.tok} callback={posted} />
-    { posts.map(({id}) => <Comment key={id} id={id} tok={tok} />) }
+    { posts.map(({id}) => <Post key={id} id={id} tok={tok} />) }
   </div>)
 }
 

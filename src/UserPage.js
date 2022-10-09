@@ -1,6 +1,6 @@
 import { gql, useQuery, useMutation } from "@apollo/client"
 
-import Comment from "./Comment"
+import Post from "./Post"
 
 const lookupUserIdQuery = gql`
 query LookupUserIdQuery($tok: String!, $id: String!) {
@@ -49,7 +49,7 @@ function UserPage(props) {
     <p>{friendStatus}</p>
     <button onClick={toggleFriendReq}>{friendReqBtnText}</button>
     <p>Friends: { userData.friends.map(({ username }) => username ).join(", ") }</p>
-    { userData.posts.map(({id}) => <Comment key={id} id={id} tok={tok} />) }
+    { userData.posts.map(({id}) => <Post key={id} id={id} tok={tok} />) }
   </div>)
 }
 
