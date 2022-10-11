@@ -2,6 +2,7 @@ import { useState } from "react"
 import { gql, useApolloClient, useMutation } from "@apollo/client"
 import { useCookies } from "react-cookie"
 
+import { linkText } from "./Style"
 import { Buffer } from "buffer"
 window.Buffer ??= Buffer
 const keccak256 = require("keccak256")
@@ -53,6 +54,7 @@ function Login(props) {
     <input type="text" placeholder="username" value={text.username} onChange={ (event) => changeText({ username: event.target.value, password: text.password }) } />
     <input type="password" placeholder="password" value={text.password} onChange={ (event) => changeText({ username: text.username, password: event.target.value }) } />
     <input type="submit" value="Log in" />
+    <p style={linkText} onClick={props.toNewAcct}>Sign up instead?</p>
   </form>)
 }
 

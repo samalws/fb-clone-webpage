@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { gql, useQuery, useMutation } from "@apollo/client"
 
-import { text, comment, reply } from "./Style"
+import { text, post, reply } from "./Style"
 import LikeButton from "./LikeButton"
 
 const getPostQuery = gql`
@@ -122,7 +122,7 @@ function Post(props) {
     refetch()
   }
 
-  return (<div style={comment}>
+  return (<div style={post}>
     { (props.repostedBy !== undefined) ? <p>Reposted by {props.repostedBy}</p> : null }
     <CommentPoster info={info.poster} />
     <CommentBody info={info} />

@@ -1,6 +1,8 @@
 import { gql, useMutation } from "@apollo/client"
 import { useCookies } from "react-cookie"
 
+import { headerBtnRight } from "./Style"
+
 const logoutMutation = gql`
 mutation Logout($tok: String!) {
   clearTok(tok: $tok)
@@ -17,7 +19,7 @@ function Logout(props) {
     props.callback()
   }
 
-  return (<button onClick={logout}>Log out</button>)
+  return (<button style={headerBtnRight} onClick={logout}>Log out</button>)
 }
 
 export default Logout

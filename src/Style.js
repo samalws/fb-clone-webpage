@@ -1,16 +1,60 @@
-export const black = "#000000"
-export const darkGray = "#888888"
-export const gray = "#AAAAAA"
-export const lightGray = "#CCCCCC"
+const black = "#000000"
+const darkGray = "#888888"
+const gray = "#AAAAAA"
+const lightGray = "#CCCCCC"
 
-export const fontFamily = ["sans-serif"]
+const fontFamily = ["sans-serif"]
 
-export const text = {
-  color: black,
+export const body = {
+  backgroundColor: lightGray,
+  margin: 0,
   fontFamily: fontFamily,
 }
 
-export const comment = {
+export const text = {
+  color: black,
+}
+
+export const linkText = {
+  color: black,
+  cursor: "pointer",
+}
+
+export const headerDiv = {
+  backgroundColor: gray,
+  padding: 10,
+}
+
+export const headerBtn = {
+  backgroundColor: "transparent",
+  borderColor: "transparent",
+  cursor: "pointer",
+}
+
+export const logo = Object.assign({
+  color: black,
+  fontWeight: "bold",
+  marginLeft: 10,
+  marginRight: 10,
+  fontSize: 16,
+}, headerBtn)
+
+export const headerBtnRight = Object.assign({ float: "right" }, headerBtn)
+
+export const appContentDiv = {
+  padding: 10,
+}
+
+export const userSearchForm = {
+  display: "inline",
+  float: "right",
+}
+
+export const userSearchBox = {}
+
+export const userSearchBtn = headerBtn
+
+export const post = {
   backgroundColor: gray,
   padding: 10,
 }

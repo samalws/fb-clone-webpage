@@ -2,6 +2,7 @@ import { useState } from "react"
 import { gql, useMutation } from "@apollo/client"
 import axios from "axios"
 
+import { linkText } from "./Style"
 import ImgUpload from "./ImgUpload"
 
 import { Buffer } from "buffer"
@@ -63,6 +64,7 @@ function Login(props) {
     <input type="text" placeholder="name" value={nameText} onChange={ (event) => changeNameText(event.target.value) } />
     <input type="password" placeholder="password" value={passwordText} onChange={ (event) => changePasswordText(event.target.value) } />
     <input type="submit" value="Create account" />
+    <p style={linkText} onClick={props.toLogin}>Login instead?</p>
   </form>)
 }
 

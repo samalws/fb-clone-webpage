@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 import * as apollo from "@apollo/client"
 
-import { lightGray } from "./Style"
+import { body } from "./Style"
 import App from "./App"
 
 const client = new apollo.ApolloClient({
@@ -10,7 +10,8 @@ const client = new apollo.ApolloClient({
   cache: new apollo.InMemoryCache(),
 })
 
-document.body.style.backgroundColor = lightGray
+for (const prop in body)
+  document.body.style[prop] = body[prop]
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
