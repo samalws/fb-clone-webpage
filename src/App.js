@@ -6,6 +6,7 @@ import MakeAcct from "./MakeAcct"
 import Login from "./Login"
 import Logout from "./Logout"
 import UserSearch from "./UserSearch"
+import Feed from "./Feed"
 import UserPage from "./UserPage"
 import MyPage from "./MyPage"
 import Settings from "./Settings"
@@ -48,7 +49,7 @@ function AppContent(props) {
     return <MakeAcct callback={() => setCurrentPage({page: "login"})} toLogin={() => setCurrentPage({page:"login"})} />
 
   if (page === "feed")
-    return <p>TODO feed page</p>
+    return <Feed tok={tok} />
   else if (page === "myPage")
     return <MyPage tok={currentPage.tok} />
   else if (page === "userPage")

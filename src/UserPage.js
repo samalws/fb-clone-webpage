@@ -4,13 +4,13 @@ import Post from "./Post"
 
 const lookupUserIdQuery = gql`
 query LookupUserIdQuery($tok: String!, $id: String!) {
-  lookupUserId(tok: $tok, id: $id) { username, pfpLink, isFriendReqIn, isFriendReqOut, friends { username }, posts { id }, reposts { id } }
+  lookupUserId(tok: $tok, id: $id) { username, pfpLink, isFriendReqIn, isFriendReqOut, friends { username }, posts { id }, reposts { post { id } } }
 }
 `
 
 const lookupUsernameQuery = gql`
 query LookupUsernameQuery($tok: String!, $username: String!) {
-  lookupUsername(tok: $tok, username: $username) { id, username, pfpLink, isFriendReqIn, isFriendReqOut, friends { username }, posts { id }, reposts { id } }
+  lookupUsername(tok: $tok, username: $username) { id, username, pfpLink, isFriendReqIn, isFriendReqOut, friends { username }, posts { id }, reposts { post { id } } }
 }
 `
 
@@ -52,7 +52,7 @@ function UserPage(props) {
     <p>Posts:</p>
     { userData.posts.map(({id}) => <Post key={id} id={id} tok={tok} />) }
     <p>Reposts:</p>
-    { userData.reposts.map(({id}) => <Post key={id} id={id} tok={tok} repostedBy={userData.username} />) }
+    { userData.reposts.map(({post:{id}}) => <Post key={id} id={id} tok={tok} repostedBy={userData.username} />) }
   </div>)
 }
 

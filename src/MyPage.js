@@ -5,7 +5,7 @@ import Post from "./Post"
 
 const getPageQuery = gql`
 query GetPage($tok: String!) {
-  myUser(tok: $tok) { username, posts { id }, reposts { id } }
+  myUser(tok: $tok) { username, posts { id }, reposts { post { id } } }
 }
 `
 
@@ -32,7 +32,7 @@ function MyPage(props) {
     <p>Posts:</p>
     { posts.map(({id}) => <Post key={id} id={id} tok={tok} />) }
     <p>Reposts:</p>
-    { reposts.map(({id}) => <Post key={id} id={id} tok={tok} repostedBy={username} />) }
+    { reposts.map(({post:{id}}) => <Post key={id} id={id} tok={tok} repostedBy={username} />) }
   </div>)
 }
 
