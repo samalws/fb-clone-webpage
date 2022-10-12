@@ -1,5 +1,6 @@
 import { gql, useQuery } from "@apollo/client"
 
+import { feedDiv, text, textBig } from "./Style"
 import Post from "./Post"
 
 const feedQuery = gql`
@@ -22,10 +23,10 @@ function MyPage(props) {
 
   const { loading, error, data } = useQuery(feedQuery, { variables: { tok }})
 
-  if (tok === "") return <p>Please sign in to view your page</p>
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error :(</p>
-  if (data == null || data.feed == null) return <p>Null response :(</p>
+  if (tok === "") return <p style={text}>Please sign in to view your page</p>
+  if (loading) return <p style={text}>Loading...</p>
+  if (error) return <p style={text}>Error :(</p>
+  if (data == null || data.feed == null) return <p style={text}>Null response :(</p>
   const feed = data.feed
 
   const renderPost = (p) =>
@@ -33,7 +34,8 @@ function MyPage(props) {
     ? <Post key={p.id} id={p.id} tok={tok} />
     : <Post key={p.reposter.username + p.post.id} id={p.post.id} tok={tok} repostedBy={p.reposter.username} />
 
-  return (<div>
+  return (<div style={feedDiv}>
+    <p style={textBig}>My feed</p>
     { feed.map(renderPost) }
   </div>)
 }

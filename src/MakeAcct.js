@@ -2,7 +2,7 @@ import { useState } from "react"
 import { gql, useMutation } from "@apollo/client"
 import axios from "axios"
 
-import { linkText } from "./Style"
+import { text, textBig, linkText, makeAccountForm, blockInputBox, makeAccountBtn } from "./Style"
 import ImgUpload from "./ImgUpload"
 
 import { Buffer } from "buffer"
@@ -36,6 +36,11 @@ function Login(props) {
     const name = nameText
     const password = passwordText
 
+    if (username === "" || name === "" || password === "") {
+      alert("please fill in all the input fields") // TODO
+      return
+    }
+
     changeUsernameText("")
     changeNameText("")
     changePasswordText("")
@@ -58,12 +63,15 @@ function Login(props) {
     props.callback(resp.data.makeAcct.id)
   }
 
-  return (<form action="#" onSubmit={makeAcct}>
-    <ImgUpload callback={setImage} />
-    <input type="text" placeholder="username" value={usernameText} onChange={ (event) => changeUsernameText(event.target.value) } />
-    <input type="text" placeholder="name" value={nameText} onChange={ (event) => changeNameText(event.target.value) } />
-    <input type="password" placeholder="password" value={passwordText} onChange={ (event) => changePasswordText(event.target.value) } />
-    <input type="submit" value="Create account" />
+  return (<form style={makeAccountForm} action="#" onSubmit={makeAcct}>
+    <p style={textBig}>Create account</p>
+    <span style={text}>Choose profile picture:</span>
+    <ImgUpload inline callback={setImage} />
+    <br />
+    <input style={blockInputBox} type="text" placeholder="username" value={usernameText} onChange={ (event) => changeUsernameText(event.target.value) } />
+    <input style={blockInputBox} type="text" placeholder="name" value={nameText} onChange={ (event) => changeNameText(event.target.value) } />
+    <input style={blockInputBox} type="password" placeholder="password" value={passwordText} onChange={ (event) => changePasswordText(event.target.value) } />
+    <input style={makeAccountBtn} type="submit" value="Create account" />
     <p style={linkText} onClick={props.toLogin}>Login instead?</p>
   </form>)
 }

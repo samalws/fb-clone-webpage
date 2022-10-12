@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { gql, useMutation } from "@apollo/client"
 
-import { text } from "./Style"
+import { likeDiv, likeBtn, likeText } from "./Style"
 
 const likePostMutation = gql`
 mutation LikePost($tok: String!, $id: String!, $like: Boolean!) {
@@ -29,10 +29,9 @@ function LikeButton(props) {
     likePostMut({ variables: { tok: props.tok, id: props.info.id, like: !liked }})
   }
 
-  return (<div>
-    <p style={text}>{liked ? "liked" : "not liked"}</p>
-    <p style={text}>{likes}</p>
-    <button onClick={toggleLike}>Toggle like</button>
+  return (<div style={likeDiv}>
+    <button style={likeBtn} onClick={toggleLike}>{liked ? "❤️" : "♡"}</button>
+    <span style={likeText} onClick={toggleLike}>{likes}</span>
   </div>)
 }
 

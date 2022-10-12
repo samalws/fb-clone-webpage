@@ -2,6 +2,7 @@ import { useState } from "react"
 import { gql, useMutation } from "@apollo/client"
 import axios from "axios"
 
+import { textBig, text, inlineInputBox, settingsDiv, settingsBtn, settingsForm } from "./Style"
 import ImgUpload from "./ImgUpload"
 
 import { Buffer } from "buffer"
@@ -49,6 +50,8 @@ function Settings(props) {
   async function changeName(event) {
     event.preventDefault()
 
+    if (name === "") return
+
     const resp = await changeSettingsMut({ variables: { tok, name }})
     setName("")
     if (resp.data.changeAcctSettings === false) {
@@ -61,6 +64,8 @@ function Settings(props) {
   async function changePassword(event) {
     event.preventDefault()
 
+    if (pw === "") return
+
     const resp = await changeSettingsMut({ variables: { tok, pwHashPreSalt: keccak256(pw).toString("base64") }})
     setPw("")
     if (resp.data.changeAcctSettings === false) {
@@ -70,19 +75,20 @@ function Settings(props) {
     alert("Changed setting successfully") // TODO
   }
 
-  return (<div>
-    <p>Change profile picture:</p>
+  return (<div style={settingsDiv}>
+    <p style={textBig}>Settings</p>
+    <p style={text}>Change profile picture:</p>
     <ImgUpload callback={setImage} />
-    <button onClick={changePfp}>Change profile picture</button>
-    <p>Change name:</p>
-    <form action="#" onSubmit={changeName}>
-      <input type="text" placeholder="New name" value={name} onChange={(event) => setName(event.target.value)} />
-      <input type="submit" value="Change name" />
+    <button style={settingsBtn} onClick={changePfp}>Change profile picture</button>
+    <p style={text}>Change name:</p>
+    <form style={settingsForm} action="#" onSubmit={changeName}>
+      <input style={inlineInputBox} type="text" placeholder="New name" value={name} onChange={(event) => setName(event.target.value)} />
+      <input style={settingsBtn} type="submit" value="Change name" />
     </form>
-    <p>Change password:</p>
-    <form action="#" onSubmit={changePassword}>
-      <input type="password" placeholder="New password" value={pw} onChange={(event) => setPw(event.target.value)} />
-      <input type="submit" value="Change password" />
+    <p style={text}>Change password:</p>
+    <form style={settingsForm} action="#" onSubmit={changePassword}>
+      <input style={inlineInputBox} type="password" placeholder="New password" value={pw} onChange={(event) => setPw(event.target.value)} />
+      <input style={settingsBtn} type="submit" value="Change password" />
     </form>
   </div>)
 }

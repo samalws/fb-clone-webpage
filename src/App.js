@@ -30,7 +30,7 @@ function Header(props) {
 
       <button style={headerBtnRight} onClick={() => setCurrentPage({page:"settings"})}>Settings</button>
       <Logout callback={() => setCurrentPage({page:"login"})} />
-      <UserSearch callback={(username) => setCurrentPage({page:"userPage",username})} />
+      <UserSearch callback={(username) => { if (username !== "") setCurrentPage({page:"userPage",username})}} />
     </div>
 }
 

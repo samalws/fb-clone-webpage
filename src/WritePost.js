@@ -2,6 +2,7 @@ import { useState } from "react"
 import { gql, useMutation } from "@apollo/client"
 import axios from "axios"
 
+import { text, writePostForm, blockInputBox, postBtn } from "./Style"
 import ImgUpload from "./ImgUpload"
 
 const makePostMutation = gql`
@@ -11,12 +12,17 @@ mutation MakePost($tok: String!, $message: String!, $images: [Image!]!) {
 `
 
 function WritePost(props) {
-  const [ text, changeText ] = useState("")
+  const [ textVal, changeText ] = useState("")
   const [ imgData, setImgData ] = useState(null)
   const [ makePostMut ] = useMutation(makePostMutation)
 
   async function submit(event) {
     event.preventDefault()
+
+    if (textVal === "") {
+      alert("please enter the text for your post")
+      return
+    }
 
     var imgList = []
     if (imgData !== null) imgList = [imgData]
@@ -37,13 +43,14 @@ function WritePost(props) {
     }
 
     changeText("")
-    props.callback(makePostMut({ variables: { tok: props.tok, message: text, images: imgListUploaded }}))
+    props.callback(makePostMut({ variables: { tok: props.tok, message: textVal, images: imgListUploaded }}))
   }
 
-  return (<form action="#" onSubmit={submit}>
-    <ImgUpload callback={setImgData} />
-    <input type="text" value={text} onChange={ (event) => changeText(event.target.value) } />
-    <input type="submit" value="Post" />
+  return (<form style={writePostForm} action="#" onSubmit={submit}>
+    <span style={text}>Image (optional):</span>
+    <ImgUpload inline callback={setImgData} />
+    <input style={blockInputBox} type="text" placeholder="Write your post..." value={textVal} onChange={ (event) => changeText(event.target.value) } />
+    <input style={postBtn} type="submit" value="Post" />
   </form>)
 }
 

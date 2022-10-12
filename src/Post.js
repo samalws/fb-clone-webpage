@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { gql, useQuery, useMutation } from "@apollo/client"
 
-import { text, post, reply } from "./Style"
+import { text, postDiv, replyDiv, pfp, commentPosterDiv, commentBodyDiv, repostBtn, replyBoxForm, inlineInputBox, replyBtn } from "./Style"
 import LikeButton from "./LikeButton"
 
 const getPostQuery = gql`
@@ -47,14 +47,15 @@ mutation Reply($tok: String!, $replyTo: String!, $message: String!) {
 `
 
 function CommentPoster(props) {
-  return (<div>
-    <img src={props.info.pfpLink} alt="" />
-    <p style={text}>{props.info.name}</p>
+  return (<div style={commentPosterDiv}>
+    <img style={pfp} src={props.info.pfpLink} alt="" />
+    <span style={text}>{props.info.name}</span>
   </div>)
+  // TODO should be a link
 }
 
 function CommentBody(props) {
-  return (<div>
+  return (<div style={commentBodyDiv}>
     { (props.info.imageLinks ?? []).map((link) => <img key={link} src={link} alt="TODO alt" />) }
     <p style={text}>{props.info.message}</p>
   </div>)
@@ -62,9 +63,9 @@ function CommentBody(props) {
 
 function RepostButton(props) {
   // TODO instant refresh
-  if (props.info.reposted) return <p>You reposted</p>
+  if (props.info.reposted) return <p style={text}>You reposted</p>
   if (!props.info.canRepost) return null
-  return <button onClick={props.callback}>Repost</button>
+  return <button style={repostBtn} onClick={props.callback}>Repost</button>
 }
 
 function ReplyBox(props) {
@@ -76,16 +77,16 @@ function ReplyBox(props) {
     props.callback(text)
   }
 
-  return (<form action="#" onSubmit={submit}>
-    <input type="text" value={text} onChange={ (event) => changeText(event.target.value) } />
-    <input type="submit" value="Reply" />
+  return (<form style={replyBoxForm} action="#" onSubmit={submit}>
+    <input style={inlineInputBox} type="text" placeholder="Write your reply..." value={text} onChange={ (event) => changeText(event.target.value) } />
+    <input style={replyBtn} type="submit" value="Reply" />
   </form>)
 }
 
 function Reply(props) {
   const tok = props.tok
   const info = props.info
-  return (<div style={reply}>
+  return (<div style={replyDiv}>
     <CommentPoster info={info.poster} />
     <CommentBody info={info} />
     <LikeButton tok={tok} info={info} />
@@ -107,9 +108,9 @@ function Post(props) {
   const [ repostMut ] = useMutation(repostMutation)
   const [ replyMut ] = useMutation(replyMutation)
 
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error :(</p>
-  if (data == null || data.lookupPostId == null) return <p>Null response :(</p>
+  if (loading) return <p style={text}>Loading...</p>
+  if (error) return <p style={text}>Error :(</p>
+  if (data == null || data.lookupPostId == null) return <p style={text}>Null response :(</p>
   const info = data.lookupPostId
 
   async function repostCallback(message) {
@@ -122,8 +123,8 @@ function Post(props) {
     refetch()
   }
 
-  return (<div style={post}>
-    { (props.repostedBy !== undefined) ? <p>Reposted by {props.repostedBy}</p> : null }
+  return (<div style={postDiv}>
+    { (props.repostedBy !== undefined) ? <p style={text}>Reposted by {props.repostedBy}</p> : null }
     <CommentPoster info={info.poster} />
     <CommentBody info={info} />
     <LikeButton tok={tok} info={info} />

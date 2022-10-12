@@ -2,7 +2,7 @@ import { useState } from "react"
 import { gql, useApolloClient, useMutation } from "@apollo/client"
 import { useCookies } from "react-cookie"
 
-import { linkText } from "./Style"
+import { textBig, linkText, loginForm, blockInputBox, loginBtn } from "./Style"
 import { Buffer } from "buffer"
 window.Buffer ??= Buffer
 const keccak256 = require("keccak256")
@@ -50,10 +50,11 @@ function Login(props) {
 
   // TODO in onChange, why do we need to set both username and password? shouldnt that be assumed that we ignore the other one?
   // TODO when the webpage doesnt have a # in front of it, it reloads
-  return (<form action="#" onSubmit={login}>
-    <input type="text" placeholder="username" value={text.username} onChange={ (event) => changeText({ username: event.target.value, password: text.password }) } />
-    <input type="password" placeholder="password" value={text.password} onChange={ (event) => changeText({ username: text.username, password: event.target.value }) } />
-    <input type="submit" value="Log in" />
+  return (<form style={loginForm} action="#" onSubmit={login}>
+    <p style={textBig}>Login</p>
+    <input style={blockInputBox} type="text" placeholder="username" value={text.username} onChange={ (event) => changeText({ username: event.target.value, password: text.password }) } />
+    <input style={blockInputBox} type="password" placeholder="password" value={text.password} onChange={ (event) => changeText({ username: text.username, password: event.target.value }) } />
+    <input style={loginBtn} type="submit" value="Log in" />
     <p style={linkText} onClick={props.toNewAcct}>Sign up instead?</p>
   </form>)
 }
