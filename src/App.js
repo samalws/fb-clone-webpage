@@ -11,6 +11,7 @@ import UserPage from "./UserPage"
 import MyPage from "./MyPage"
 import Settings from "./Settings"
 // TODO full post w comments vs just post?
+// TODO copyable links
 
 function Logo(props) {
   return <button onClick={props.callback} style={logo}>FBClone</button>
@@ -48,12 +49,15 @@ function AppContent(props) {
   else if (page === "makeAcct")
     return <MakeAcct callback={() => setCurrentPage({page: "login"})} toLogin={() => setCurrentPage({page:"login"})} />
 
+  const userClickCallback = (username) => setCurrentPage({page: "userPage", username })
+  // TODO can navigate to userPage of your own user
+
   if (page === "feed")
-    return <Feed tok={tok} />
+    return <Feed tok={tok} userClickCallback={userClickCallback} />
   else if (page === "myPage")
-    return <MyPage tok={currentPage.tok} />
+    return <MyPage tok={currentPage.tok} userClickCallback={userClickCallback} />
   else if (page === "userPage")
-    return <UserPage tok={tok} username={currentPage.username} />
+    return <UserPage tok={tok} username={currentPage.username} userClickCallback={userClickCallback} />
   else if (page === "settings")
     return <Settings tok={tok} />
 }

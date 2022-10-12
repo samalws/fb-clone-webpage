@@ -51,9 +51,9 @@ function UserPage(props) {
     <button onClick={toggleFriendReq}>{friendReqBtnText}</button>
     <p style={text}>Friends: { userData.friends.map(({ username }) => username ).join(", ") }</p>
     <p style={text}>Posts:</p>
-    { userData.posts.map(({id}) => <Post key={id} id={id} tok={tok} />) }
+    { userData.posts.map(({id}) => <Post key={id} id={id} tok={tok} userClickCallback={props.userClickCallback} />) }
     <p style={text}>Reposts:</p>
-    { userData.reposts.map(({post:{id}}) => <Post key={id} id={id} tok={tok} repostedBy={userData.username} />) }
+    { userData.reposts.map(({post:{id}}) => <Post key={id} id={id} tok={tok} repostedBy={userData.username} userClickCallback={props.userClickCallback} />) }
   </div>)
 }
 

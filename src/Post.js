@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { gql, useQuery, useMutation } from "@apollo/client"
 
-import { text, postDiv, replyDiv, pfp, commentPosterDiv, commentBodyDiv, repostBtn, replyBoxForm, inlineInputBox, replyBtn } from "./Style"
+import { text, linkText, postDiv, replyDiv, pfp, commentPosterDiv, commentBodyDiv, repostBtn, replyBoxForm, inlineInputBox, replyBtn } from "./Style"
 import LikeButton from "./LikeButton"
 
 const getPostQuery = gql`
@@ -11,6 +11,7 @@ query GetPost($tok: String!, $id: String!) {
     poster {
       id
       name
+      username
       pfpLink
     }
     message
@@ -24,6 +25,7 @@ query GetPost($tok: String!, $id: String!) {
       poster {
         id
         name
+        username
         pfpLink
       }
       message
@@ -47,11 +49,11 @@ mutation Reply($tok: String!, $replyTo: String!, $message: String!) {
 `
 
 function CommentPoster(props) {
+  // TODO should really be passing along id not username to callback
   return (<div style={commentPosterDiv}>
     <img style={pfp} src={props.info.pfpLink} alt="" />
-    <span style={text}>{props.info.name}</span>
+    <span style={linkText} onClick={() => props.callback(props.info.username)}>{props.info.name}</span>
   </div>)
-  // TODO should be a link
 }
 
 function CommentBody(props) {
@@ -87,7 +89,7 @@ function Reply(props) {
   const tok = props.tok
   const info = props.info
   return (<div style={replyDiv}>
-    <CommentPoster info={info.poster} />
+    <CommentPoster info={info.poster} callback={props.userClickCallback} />
     <CommentBody info={info} />
     <LikeButton tok={tok} info={info} />
   </div>)
@@ -95,7 +97,7 @@ function Reply(props) {
 
 function Replies(props) {
   return (<div className="Replies">
-    { props.info.map((e) => <Reply key={e.id} info={e} tok={props.tok} />) }
+    { props.info.map((e) => <Reply key={e.id} info={e} tok={props.tok} userClickCallback={props.userClickCallback} />) }
     <ReplyBox callback={props.replyCallback} />
   </div>)
 }
@@ -125,11 +127,11 @@ function Post(props) {
 
   return (<div style={postDiv}>
     { (props.repostedBy !== undefined) ? <p style={text}>Reposted by {props.repostedBy}</p> : null }
-    <CommentPoster info={info.poster} />
+    <CommentPoster info={info.poster} callback={props.userClickCallback} />
     <CommentBody info={info} />
     <LikeButton tok={tok} info={info} />
     <RepostButton tok={tok} info={info} callback={repostCallback} />
-    <Replies tok={tok} info={info.replies} replyCallback={replyCallback} />
+    <Replies tok={tok} info={info.replies} replyCallback={replyCallback} userClickCallback={props.userClickCallback} />
   </div>)
 }
 

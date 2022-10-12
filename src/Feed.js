@@ -31,8 +31,8 @@ function MyPage(props) {
 
   const renderPost = (p) =>
     p.__typename === "Post"
-    ? <Post key={p.id} id={p.id} tok={tok} />
-    : <Post key={p.reposter.username + p.post.id} id={p.post.id} tok={tok} repostedBy={p.reposter.username} />
+    ? <Post key={p.id} id={p.id} tok={tok} userClickCallback={props.userClickCallback} />
+    : <Post key={p.reposter.username + p.post.id} id={p.post.id} tok={tok} repostedBy={p.reposter.username} userClickCallback={props.userClickCallback} />
 
   return (<div style={feedDiv}>
     <p style={textBig}>My feed</p>

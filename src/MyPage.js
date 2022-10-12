@@ -33,9 +33,9 @@ function MyPage(props) {
     <p style={text}>Write a post:</p>
     <WritePost tok={props.tok} callback={posted} />
     <p style={text}>My posts:</p>
-    { posts.map(({id}) => <Post key={id} id={id} tok={tok} />) }
+    { posts.map(({id}) => <Post key={id} id={id} tok={tok} userClickCallback={props.userClickCallback} />) }
     <p style={text}>My reposts:</p>
-    { reposts.map(({post:{id}}) => <Post key={id} id={id} tok={tok} repostedBy={username} />) }
+    { reposts.map(({post:{id}}) => <Post key={id} id={id} tok={tok} repostedBy={username} userClickCallback={props.userClickCallback} />) }
   </div>)
 }
 
