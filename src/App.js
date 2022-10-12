@@ -12,6 +12,7 @@ import MyPage from "./MyPage"
 import Settings from "./Settings"
 // TODO full post w comments vs just post?
 // TODO copyable links
+// TODO should get a notification/list of ppl who are friend requesting you
 
 function Logo(props) {
   return <button onClick={props.callback} style={logo}>FBClone</button>
